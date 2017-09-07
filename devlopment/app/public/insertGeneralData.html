@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+<head>
+    <title>insert general data</title>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="css/ng-tags-input.min.css">
+      <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+</head>
+  <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav onTab">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+  <section>
+    <img src="images/general.jpg" class="topImgDesk" id="topImgGMobile">
+  </section>
+  <section class="topTitleDesk">
+    <span class="topGTitle">General information</span>
+  </section>
+<body ng-controller="insertGeneralCtrl">
+<br><br><br><br>
+    <form>
+    <h1 class="insertTitleG">Please insert general mediacl information</h1>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="insertSubMobile" data-toggle="tooltip" title="Select an entity from the list">Medical entity</label>
+        <select class="entityGeneral" id="entitySelect" ng-model="entitySelect" name="entitySelect">
+          <option value="Doctor">Doctor</option>
+          <option value="Hospital">Hospital</option>
+          <option value="Clinic">Clinic</option>
+        </select>    
+      </div> 
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="entityMobile" data-toggle="tooltip" title="Enter the name of the medical entity, for example Dr. Rosen Moshe">Medical entity name</label>
+        <input type="text" class="generalInput form-control" id="pwd" ng-model="name" name="name" placeholder="medical entity name" required>
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="expertiseMobile" data-toggle="tooltip" title="enter in what the meducal entity specialized in(e.g. general dentistry)">Medical facility expertise</label>
+        <input type="text" class="generalInput form-control" id="pwd" ng-model="Expertise" name="Expertise" placeholder="medical facility expertise" required>
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="hmoMobile" data-toggle="tooltip" title="Select from the list the name of medical entity">HMO</label>
+        <select class="hmoGeneral" id="hmoSelect" ng-model="hmoSelect" name="hmoSelect">
+          <option value="Maccabi">Maccabi</option>
+          <option value="Clalit">Clalit</option>
+          <option value="Meuhedet">Meuhedet</option>
+          <option value="Leumit">Leumit</option>
+        </select> 
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="addressMobile" data-toggle="tooltip" title="Enter the address of the medical entity">The address of the medical entity</label>
+        <input type="text"  class="generalInput form-control" id="pwd" ng-model="Address" placeholder="the address of the medical entity" name="Address">
+      </div>
+      <div class="form-group">
+      <label for="pwd" class="editTitle" id="hourMobile" data-toggle="tooltip" title="Select the reception hours">Reception hours</label>
+      <br>
+      <label for="pwd" class="insertGTitle hoursMobile">Sunday</label>
+      <br>
+        <label class="fromTitle fromMobile">From</label>
+          <input type="time" id="SundayHoursFrom" ng-model="SundayHoursFrom" class="hoursInputM" name="SundayHoursFrom" value="">
+        <label class="untilMobile">Until</label>
+          <input type="time" id="SundayHoursUntil" ng-model="SundayHoursUntil" class="hoursInputM" name="SundayHoursUntil" value="">
+      <br><br>
+      <label for="pwd" class="insertGTitle hoursMobile">Monday</label>
+        <br>
+        <label for="pwd" class="fromTitle fromMobile">From</label>
+          <input type="time" id="MondayHoursFrom" ng-model="MondayHoursFrom" class="hoursInputM" name="MondayHoursFrom">
+        <label class="untilMobile">Until</label>
+          <input type="time" id="MondayHoursUntil" ng-model="MondayHoursUntil" class="hoursInputM" name="MondayHoursUntil">
+          <br><br>
+      <label for="pwd" class="insertGTitle hoursMobile">Tuesday</label>
+        <br>
+        <label for="pwd" class="fromTitle fromMobile">From</label>
+          <input type="time" id="TuesdayHoursFrom"  class="hoursInputM" ng-model="TuesdayHoursFrom" name="TuesdayHoursFrom">
+        <label class="untilMobile">Until</label>
+          <input type="time" class="hoursInputM" id="TuesdayHoursUntil" ng-model="TuesdayHoursUntil" name="TuesdayHoursUntil">
+          <br><br>
+      <label for="pwd" class="insertGTitle hoursMobile">Wednesday</label>
+        <br>
+        <label for="pwd" class="fromTitle fromMobile">From</label>
+          <input type="time" class="hoursInputM" id="WednesdayHoursFrom" ng-model="WednesdayHoursFrom" name="WednesdayHoursFrom">
+        <label class="untilMobile">Until</label>
+          <input type="time" class="hoursInputM" id="WednesdayHoursUntil" ng-model="WednesdayHoursUntil" name="WednesdayHoursUntil">
+          <br><br>
+      <label for="pwd" class="insertGTitle hoursMobile">Thursday</label>
+        <br>
+        <label for="pwd" class="fromTitle fromMobile">From</label>
+          <input type="time" class="hoursInputM" id="ThursdayHoursFrom" ng-model="ThursdayHoursFrom" name="ThursdayHoursFrom">
+        <label class="untilMobile">Until</label>
+          <input type="time" class="hoursInputM" id="ThursdayHoursUntil" ng-model="ThursdayHoursUntil" name="ThursdayHoursUntil">
+          <br><br>
+      <label for="pwd" class="insertGTitle hoursMobile">Friday</label>
+        <br>
+        <label for="pwd" class="fromTitle fromMobile">From</label>
+          <input type="time" class="hoursInputM" id="FridayHoursFrom" ng-model="FridayHoursFrom" name="FridayHoursFrom">
+        <label class="untilMobile">Until</label>
+          <input type="time" class="hoursInputM" id="FridayHoursUntil" ng-model="FridayHoursUntil" name="FridayHoursUntil">
+      <br><br>
+      <button type="submit" class="btn btn-default submitAddInfo fromMobile" ng-click="saveGeneral()">Submit</button>
+      </div>
+    </form>
+    <button type="submit" class="btn btn-default backGeneral" value="Back" onclick="window.history.back()"><< back
+    </button>
+    <script>
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHo4IfFEKL8UxvDQkoEkD6UPggg9RFPBI&libraries=places,geometry">
+    </script>
+    <script type="text/javascript">
+        jQuery(function($){
+             $( '.menu-btn' ).click(function(){
+             $('.responsive-menu').toggleClass('expand')
+             })
+        })
+    </script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+</body>
+</html>

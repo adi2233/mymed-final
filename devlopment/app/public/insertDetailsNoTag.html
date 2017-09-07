@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+<head>
+    <title>insert personal data</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="css/style.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+  <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav onTab">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+  <section>
+    <img src="images/personalImg.jpg" class="topImgDesk">
+  </section>
+  <section class="topTitleDesk">
+    <span class="topTitlePersonal">Personal Medical Information</span>
+  </section>
+<body ng-controller="detailsCtrl">
+  <br><br><br><br>
+  <h2 class="insertTitle insertTitleG">Please insert personal medical information</h2>
+    <form enctype="multipart/form-data" method="post" action="https://mymed2.herokuapp.com/addDataNoTags">
+        <input type="text" class="form-control" id="emailInput" name="email" value={{showEmail}}>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" id="docTitleMobile" data-toggle="tooltip" title="Enter a title for your information item">Document title</label>
+        <input type="text" class="form-control editPersonal" id="pwd" name="Title"  ng-model="Title" placeholder="document title" required>
+      </div> 
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="Add information and detail about the information item">Add information</label>
+        <input type="text" class="form-control editPersonal" id="pwd" name="Info" ng-model="Info" placeholder="document information" required>
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle " data-toggle="tooltip" title="choose from the list category to add to this item">Category of the item</label>
+        <select id="selectedCat" ng-model="selectedCat" ng-options="x for x in names" ></select>
+      </div>
+      <div class="form-group">
+          <label for="pwd" class="editTitle" data-toggle="tooltip" title="Upload file that belongs to the information item">Attach file to the item</label>
+          <input type="file" id="file" class="btn btn-default fileButton" name="file" value="">
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="Write down the medical recommendations">The medical recommendations</label>
+        <input type="text" class="form-control editPersonal" id="pwd" name="Recommendation" ng-model="Recommendation" placeholder="the medical recommendations" required>
+      </div>
+      <input type="text" class="form-control" id="dateInput" name="mydate" value={{showDate}}>   
+      <button type="submit" class="btn btn-default submitAddInfo" ng-click="personalSave()">Submit
+      </button>
+      <button type="submit" class="btn btn-default backinsertD" value="Back" onclick="window.history.back()"><< back
+      </button>
+    </form>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();   
+      });
+    </script>
+    <script type="text/javascript">
+        jQuery(function($){
+             $( '.menu-btn' ).click(function(){
+             $('.responsive-menu').toggleClass('expand')
+             })
+        })
+    </script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+</body>
+</html>

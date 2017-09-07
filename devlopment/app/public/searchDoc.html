@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+  <head>
+    <title>search doctor nearby</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav onTab">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+    <section>
+      <img src="images/search.jpg" class="topImgSearch">
+    </section>
+    <section class="topTitleSearch">
+      <span class="topTitleDoc topTitleDocM">Search doctor nearby</span>
+    </section>
+<body ng-controller="searchController" id="bo">
+    <h2 id="titleSeach">Please enter location, and filter with expertise and HMO </h2>
+    <form>
+      <label class="entityMobile">Select a specialty</label>
+      <label class="selectTitle">Select a specialty of the medical entity from this list:</label>
+      <select id="expertise">
+        <option value="all" name="all">all</option>
+        <option value="Dentist" name="Dentist">Dentist</option>
+        <option value="Gastroenterology" name="Gastroenterology">Gastroenterology</option>
+        <option value="Famliy Doctor" name="Famliy Doctor">Famliy Doctor</option>
+        <option value="Gynecology" name="Gynecology">Gynecology</option>
+        <option value="Ophthalmology" name="Ophthalmology">Ophthalmology</option>
+        <option value="Dermatology" name="Dermatology">Dermatology</option>
+        <option value="Orthopedics" name="Orthopedics">Orthopedics</option>
+        <option value="Surgery" name="Surgery">Surgery</option>
+        <option value="Inernal medicine" name="Inernal medicine">Inernal medicine</option>
+        <option value="Psychiatrist" name="Psychiatrist">Psychiatrist</option>
+      </select>
+      <br><br>
+      <label class="selectHMOMobile">Select name of health fund:</label>
+      <label class="selectTitleHMO">Select name of health fund from the list:</label>
+      <select id="HMOSearch">
+        <option value="all" name="all">all</option>
+        <option value="Maccabi" name="Maccabi">Maccabi</option>
+        <option value="Clalit" name="Clalit">Clalit</option>
+        <option value="Meuhedet" name="Meuhedet">Meuhedet</option>
+        <option value="Leumit" name="Leumit">Leumit</option>
+      </select>
+      <br><br>
+      <input ng-model="input1" id="input1" name="input1" class="controls" type="text" placeholder="Enter location">
+      <button value="send" id="sendButton">send</button>
+    </form>
+    <div id="map"></div>
+    <h1 class="searchResult">Search Result:</h1>
+    <div ng-repeat="i in docNearby" class="serachRes">
+      <h1 class="docNameSearch">{{i.name}}</h1>
+      <br>
+      <p class="docSearchMobile">Distance from you: {{i.distance}}</p>
+      <br>
+      <p class="docSearchMobile">HMO: {{i.HMO}}</p>
+      <br>
+      <p class="docSearchMobile">Expertise: {{i.Expertise}}</p>
+      <br>
+      <span class="docSearchMobile">Reception hours: </span>
+      <span ng-repeat="j in i.reception_hours"> 
+        <span ng-if="j.Sunday" class="searchDocDay">Sunday: {{j.Sunday}}</span>
+        <span ng-if="j.Monday" class="searchDocDay">, Monday: {{j.Monday}}</span>
+        <span ng-if="j.Tuesday" class="searchDocDay">, Tuesday: {{j.Tuesday}}</span>
+        <span ng-if="j.Wednesday" class="searchDocDay">, Wednesday: {{j.Wednesday}}</span>
+        <span ng-if="j.Thursday" class="searchDocDay">, Thursday: {{j.Thursday}}</span>
+        <span ng-if="j.Friday" class="searchDocDay">, Friday: {{j.Friday}}</span>
+        <span ng-if="j.Saturday" class="searchDocDay">, Saturday: {{j.Saturday}}</span>
+      </span>
+      <br><br>
+      <p class="addressSearch docSearchMobile">Address: {{i.addres}}</p>
+    </div>
+    <script>
+     function initAutocomplete() { //initAutocomplete
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 32.0853, lng: 34.7818},
+          zoom: 10
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('input1');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.  
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+          
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHo4IfFEKL8UxvDQkoEkD6UPggg9RFPBI&callback=initMap&libraries=places,geometry&callback=initAutocomplete">
+    </script>
+    <script type="text/javascript">
+        jQuery(function($){
+             $( '.menu-btn' ).click(function(){
+             $('.responsive-menu').toggleClass('expand')
+             })
+        })
+    </script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+  </body>
+</html>

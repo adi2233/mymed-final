@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+<head>
+    <title>insert personal data</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="css/ng-tags-input.min.css">
+      <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="css/style.css">
+</head>
+    <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav onTab">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+  <section>
+    <img src="images/personalImg.jpg" class="topImgDesk">
+  </section>
+  <section class="topTitleDesk">
+    <span class="topTitle">Personal medical information</span>
+  </section>
+<body ng-controller="TagsPerCtrl" id="body">
+  <br><br><br><br>
+    <form>
+    <h1 class="insertTitleTag">Please add Tags and Premission</h1>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="The title of the information item">Document title</label>
+        <p class="editPersonal">{{myinfo.Title}}</p>
+      </div> 
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="Information and detail about the information item">Document information</label>
+        <p class="editPersonal">{{myinfo.Info}}</p>
+      </div>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="The category belong the item information">Category of the item</label>
+        <p class="editPersonal">{{myinfo.Category}}</p>
+      </div>
+      <p id="demo"></p>
+      <div class="form-group">
+        <label for="pwd" class="editTitle" data-toggle="tooltip" title="The medical recommendations from medical entity">The medical recommendations</label>
+        <p class="editPersonal">{{myinfo.Recommendation}}</p>
+      </div>
+      <label for="pwd" class="editTitle" data-toggle="tooltip" title="Tags that belong to this item">Tags</label>
+      <tags-input ng-model="Tags" class="editPersonal" name="Tags" id="Tags" display-property="name" placeholder="Add a tag for your item" replace-spaces-with-dashes="false">
+        <auto-complete source="loadTags($query)"
+                     min-length="0"
+                     load-on-focus="true"
+                     load-on-empty="true"
+                     max-results-to-show="32"
+                     template="my-custom-template"></auto-complete>
+      </tags-input>
+    <br>
+    <label class="editTitle" data-toggle="tooltip" title="choose if to add permission to this item or not">permission</label>
+    <br>
+      <input type="radio" name="permission" class="perButton" ng-model="permission" value="0" checked><label class="addPer">No</label><br>  
+      <input type="radio" name="permission" class="perButton" ng-model="permission" value="1"><label class="addPer">Yes</label><br>
+    <div ng-modle="userPermission" id="userPermission">
+      <h3 class="permissionTitle">Add a user to allow them to view the info item</h3>
+      <section ng-repeat="per in names">
+        <input type="checkbox" ng-model="myChoice" ng-change="getChocie(names[$index])"  ng-true-value="1" ng-false-value="0" class="permissionName"><lable class="permissionLable">{{per}}</lable>
+      </section>
+          <div ng-click="addOtherUser()" id="otherPermission">
+            <lable class="addTitle">add other user...</lable>
+          </div>
+          <input type="text" name="newPer" value="" ng-model="newPer" id="inputAdd">
+          <button type="submit" class="addButton" id="buttonAdd" ng-click="callfunction()">add</button>
+    </div>       
+      <button type="submit" class="btn btn-default submitAddInfo" ng-click="addTagsPer()">Submit
+      </button>
+    </form>
+    <button type="submit" class="btn btn-default backInsertTag" value="Back" onclick="window.history.back()"><< back
+    </button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+    <!-- Modal content -->
+      <section class="modal-content">
+        <h1>would you like to creat a notification?</h1>
+        <br>
+        <p>{{myinfo.Recommendation}}</p>
+         <input type="date" ng-model="dateString" id="date">
+         <br><br>
+         <input type="radio" name="reminder" value="0" checked>once
+         <input type="radio" name="reminder" value="1">every day
+         <input type="radio" name="reminder" value="7">every week
+         <input type="radio" name="reminder" value="30">every month
+         <input type="radio" name="reminder" value="365">every year
+        <br>
+        <button ng-click="SaveNoti('yes')" class="createNoti">yes</button>
+        <button ng-click="SaveNoti('no')" class="createNoti">no</button>
+      </section>
+    </div>
+    <script type="text/ng-template" id="my-custom-template">
+         <div class="right-panel">
+          <span ng-bind-html="$highlight($getDisplayText())"></span>
+         </div> 
+    </script>
+    <script type="text/javascript">
+        jQuery(function($){
+             $( '.menu-btn' ).click(function(){
+             $('.responsive-menu').toggleClass('expand')
+             })
+        })
+    </script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+    <head>
+        <title>personal medical info</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/ng-tags-input.min.css">
+        <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
+    </head>
+    <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav onTab">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+<body ng-init="list = true" class="bodyHeandler">
+    <main>
+        <section>
+            <img src="images/personalImg.jpg" class="topImgDesk">
+        </section>
+        <section class="topTitleDesk">
+            <span class="topTitlePersonal">Personal medical information</span>
+        </section>
+         <section ng-controller="getPersonalCtrl">
+             <a href="insertDetailsNoTag.html" class="redirectAdd">
+                <span class="addInfoDesk">add personal</span>
+                <br>
+                <span class="addInfoSpan">information</span>
+                <img src="images/addButton.png" class="addInfoImg">
+                <img src="images/addmobile.png" class="addInfoMobileP">
+             </a>
+             <img class="changeView listMobile" src="images/list.png" ng-click="list = true; content = false; details = false;" >
+             <img class="changeView" src="images/details.png" ng-click="details = true; list=false; content=false;">
+             <img class="changeView" src="images/content.png" ng-click="content = true; list=false; details=false;">
+             <br><br>
+             <section class="sortDateT">
+                 <span class="titleSort">sort data by:</span>
+                 <select class="sortInfo" name="shortData" ng-model="shortData" id="shortData" ng-change="shortFunc()">
+                    <option value="AZ">A to Z</option>
+                    <option value="ZA">Z to A</option>
+                    <option value="firstDate">First</option>
+                    <option value="lastDate">Last</option>
+                 </select>
+             </section>
+             <span class="searchKeyword">Search item by keyword</span>
+             <br>
+             <input type="search" id="filter" name="searchString" ng-model="searchString" placeholder="change view by keyword">
+             <br>
+             <p>{{insertData}}</p>
+             <br>
+             <section class="detailsAndler" ng-show="list" ng-repeat="index in insertDataToDB | filter:searchString">
+                <img src="images/eye-24-256.png" class="seeImg" title="more details" alt="more details" ng-click="viewCurrent(index)">
+                <img src="images/pencil.png" class="editImg" title="edit info" alt="edit info" ng-click="editData(index)">
+                <img src="images/trash.png" class="delImg" title="delete info" alt="delete info" ng-click="deletePopUp(index)">
+                    <h1 class="titlePerDesk"><span class="titles">  </span>{{index.Title}}</h1>
+                    <span class="titlesTag">Tags </span>
+                    <section class="displayTags" ng-repeat="i in index.Tags">
+                    <span class="tagDataPer">{{i.name}}</span>
+                    </section>
+                <div class="clear"></div>          
+             </section>
+             <section ng-repeat="index in insertDataToDB | filter:searchString" class="detailsAndler"  ng-show="details">
+                    <img src="images/eye-24-256.png" class="seeImg" title="more details" alt="more details" ng-click="viewCurrent(index)">
+                    <img src="images/pencil.png" class="editImg"  title="edit info" alt="edit info" ng-click="editData(index)">
+                    <img src="images/trash.png" class="delImg" title="delete info" alt="delete info" ng-click="deletePopUp(index)">
+                    <h1 class="titlePerDesk"><span class="titles"></span>{{index.Title}}</h1>
+                    <h2 class="contentName"><span class="titles">Date of creation</span>{{index.myDate}}</h2>
+                <div class="clear"></div>        
+             </section>
+             <section ng-repeat="index in insertDataToDB | filter:searchString" class="detailsAndler" ng-show="content">
+                    <img src="images/eye-24-256.png" class="seeImg" title="more details" alt="more details" ng-click="viewCurrent(index)">
+                    <img src="images/pencil.png" class="editImg" title="edit info" alt="edit info"  ng-click="editData(index)">
+                    <img src="images/trash.png" class="delImg" title="delete info" alt="delete info" ng-click="deletePopUp(index)">
+                    <h1 class="titlePerDesk"><span class="titles"></span>{{index.Title}}</h1>
+                    <span class="titlesTag">Tags</span>
+                    <section class="displayTags" ng-repeat="i in index.Tags">
+                      <p class="tagDataPer">{{i.name}}</p>
+                    </section>
+                    <br>
+                    <h2 class="contentName"><span class="titles"> Document information</span>{{index.Info}}</h2>
+                    <h2 class="contentName"><span class="titles">Date of creation</span>{{index.myDate}}</h2>                  
+                    <div class="clear"></div>        
+             </section>
+             <section id="myModal" class="modal">
+                <section class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 class="deleteQus">would you like to delete your info?</h2>
+                    <button class="btn btn-primary" id="buttonYes" ng-click="deleteInfo(popUp)">yes</button>
+                    <button class="btn btn-primary" id="buttonNo" ng-click="closePopUp()">no</button>
+                </section> 
+             </section>
+             <br><br>
+             <p id="accessTitle">You can choose user from the list to see items that you have been tagged in</p>
+                <span id="getAccess">
+                    <select ng-model="selectedName" id="selectedName" name="selectedName" value="" ng-options="access for access in names"></select>
+                    <button ng-click="getAllAccess()" class="btn btn-default accessButton">Access user</button>
+                </span>
+                <section ng-repeat ="i in getUserPer" class="detailsAndler">
+                    <h1 class="titleAccess">{{i.Title}}</h1>
+                    <h2 class="contentName"><span class="titles">Info: </span>{{i.Info}}</h2>
+                    <h2 class="contentName"><span class="titles">Category: </span>{{i.Category}}</h2>
+                    <h2 class="contentName"><span class="titles">Recommendation: </span>{{i.Recommendation}}</h2>
+                    <span class="titlesTag">Tags</span>
+                    <section class"displayTags"><p class="tagDataPer" ng-repeat ="a in i.Tags">
+                        {{a.name}}
+                    </p>
+                    </section>
+                </section>
+          </section>
+    </main>
+    <script type="text/javascript">
+        jQuery(function($){
+             $( '.menu-btn' ).click(function(){
+             $('.responsive-menu').toggleClass('expand')
+             })
+        })
+    </script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyMedical</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    </head>
+   <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav onTab">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+<body>
+    <a href="getPrivateData.html">
+        <section class="ImgDesk">
+            <img src="images/personal.jpg" alt="personal info" title="personal info" class="mainImgDeskP">
+            <h2 class="titleDesk">Personal Medical Information</h2>
+        </section>
+    </a>
+    <a href="generalRanking.html">
+        <section class="gneralIndex">
+            <img src="images/general.jpg" alt="general info" title="general info" class="mainImgDesk">
+            <h2 class="titleDeskG">General Information</h2>
+        </section>
+    </a>
+    <a href="searchDoc.html">
+        <section class="searchIndex">
+            <img src="images/search.jpg" alt="search doctor" title="search doctor" class="mainImgDesk mainImgMobile">
+            <h2 class="titleSearchDesk">Search Doctor Nearby</h2>
+        </section>
+     </a>
+    <script type="text/javascript">
+        jQuery(function($){
+                 $( '.menu-btn' ).click(function(){
+                 $('.responsive-menu').toggleClass('expand')
+                 })
+        })
+    </script>
+</body>
+</html>

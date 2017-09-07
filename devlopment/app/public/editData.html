@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="mymed">
+    <head>
+        <title>Edit private data</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/ng-tags-input.min.css">
+        <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+   <header class="deskHeader">
+        <a href="index.html" id="logo"> </a>
+         <nav class="navBarPrivate">
+            <a href="index.html">
+              <h3 class="homeNav">Home</h3>
+            </a>
+            <a href="getPrivateData.html">
+              <h3 class="PersonalNav onTab">Personal Medical Infomation</h3>
+            </a>
+            <a href="generalRanking.html">
+              <h3 class="GeneralNav">General Medical Information</h3>
+            </a>
+            <a href="searchDoc.html">
+              <h3 class="SearchNav">Search Doctor Nearby</h3>
+            </a>
+            <a href="tagsManager.html">
+              <h3 class="SearchNav">Tags Manager</h3>
+            </a>
+            <a href="login.html" id="loginLink">
+              <span data-toggle="tooltip" title="Click to login">Login</span>
+            </a>
+         </nav>
+    <div class="menu-btn" id="menu-btn">
+      <div></div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="responsive-menu">
+        <ul class="ulMobile">
+           <li class="liMobile"><a href="index.html">Home</a></li>
+           <li class="liMobile"><a href="getPrivateData.html">Personal Medical Infomation</a></li>
+           <li class="liMobile"><a href="generalRanking.html">General Medical Information</a></li>
+           <li class="liMobile"><a href="searchDoc.html">Search Doctor Nearby</a></li>
+           <li class="liMobile"><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+  </header> 
+<body>
+    <main>
+        <section>
+            <img src="images/personalImg.jpg" class="topImgDesk">
+        </section>
+        <section class="topTitleDesk">
+            <span class="topTitle">Personal medical information</span>
+        </section>
+        <section ng-controller="editPersonalCtrl">
+             <br><br><br><br>
+             <h2 class="editMainTitle">Edit your document</h2>
+             <br>
+             <form ng-submit="submitEdit()">
+                 <label class="editTitle" data-toggle="tooltip" title="choose a title to the document">Document title</label>
+                 <input class="form-control editPersonal" id="Title" value="{{myinfoEdit.Title}}">
+                 <br>
+                 <label class="editTitle" data-toggle="tooltip" title="add information and details to the document">Document information</label>
+                 <input class="form-control editPersonal" id="Info" value="{{myinfoEdit.Info}}">
+                 <br>
+                 <label class="editTitle" data-toggle="tooltip" title="Note the recommendation from medical entity">The medical recommendations</label>
+                 <input class="form-control editPersonal" id="Recommendation" id="pwd" value="{{myinfoEdit.Recommendation}}" >
+                 <br>
+                 <label class="editTitle" data-toggle="tooltip" title="Select appropriate tags to the document">Tags</label>
+                    <tags-input ng-model="Tags" class="editPersonal" name="Tags" id="Tags" display-property="name" replace-spaces-with-dashes="false">
+                        <auto-complete source="loadTag($query)"
+                             min-length="0"
+                             load-on-focus="true"
+                             load-on-empty="true"
+                             max-results-to-show="32"
+                             template="my-custom-template">
+                          </auto-complete>
+                    </tags-input>
+                  <br>
+                   <label id="TitlePer" class="editTitle" data-toggle="tooltip" title="add information and details to the document" ng-init="currentAcess()">Permission</label>
+                  <section ng-repeat="perEmail in Per">
+                    <input type="checkbox" name="myChoice" ng-model="myChoice" value={{perEmail}} class="permissionName" ng-checked="true"><lable class="permissionLable">{{perEmail}}</lable>
+                  </section>
+              <button type="submit" class="btn btn-default submitEdit">update
+                  </button>
+                  <button type="submit" class="btn btn-default backEdit" value="Back" onclick="window.history.back()"><< back
+                  </button>
+             </form>
+            <script type="text/ng-template" id="my-custom-template">
+                <div class="right-panel">
+                    <span ng-bind-html="$highlight($getDisplayText())"></span>
+                </div> 
+            </script>
+          </section> 
+    </main>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-resource.min.js"></script>
+    <script type="text/ng-template" id="my-custom-template">
+      <div class="right-panel">
+        <span ng-bind-html="$highlight($getDisplayText())"></span></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular/ng-tags-input.min.js"></script>
+    <script src="js/appController.js"></script>
+</body>
+</html>
